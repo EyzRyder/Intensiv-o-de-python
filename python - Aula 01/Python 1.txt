@@ -1,0 +1,84 @@
+PRE - AUTOMAÇÃO DEPROCESSOS E SISTEMAS COM PYTHON
+
+I pyautogui -> automatizar o seu mouse, o seu teclado e a sua tela
+pyperclip
+# escrever o passo a passo em português
+# Passo 1 - Entrar no sistema da empresa (no caso o drive)
+# Passo 2 - Navegar no sistema até encontrar a base de dados
+# Passo 3 - Exportar a base de vendas
+# Passo 4 - Calcularia os indicadores (faturamento e quatnidade de produtos vendidos)
+ # Passo 5 - Enviar em email para a diretoria com os indicadores
+
+#instalar 1 unica vez
+!pip install pyautogui
+!pip install pyperclip
+
+
+import pyautogui
+import pyperclip
+import time
+pyautogui.PAUSE = 1
+
+# escrever o passo a passo em português
+# Passo 1- Entrar no ststema da empresa (no caso o drive)
+
+pyautogui.press("win")
+pyautogui.write("brave")
+pyautogui.press("enter")
+pyautogui.hotkey("ctrl", "t")
+pyautogui.write("https://drive.google.com/drive/folders/149xknr9JvrlEnhNWO49zPcw0PW5icxga")
+pyautogui.press("enter") 
+time.sleep(3)
+
+# ou
+#pyperclip.copy("https://drive.goo")
+#pyautogui, hotkey("ctrl", "v")
+#pyautogui.press("enter")
+
+
+# Passo 2 - Navegar no sistema até encontrar a base de dados
+
+pyautogui.click (x=430, y=370, clicks=2)
+time.sleep(3)
+
+# Passo 3 - Exportar a base de vendas
+
+pyautogui.click (x=446, y=370)
+pyautogui.click (x=1662, y=237)
+pyautogui.click (x=1384, y=737)
+time.sleep(3)
+
+# Passo 4- Calcularia os indicadores (faturamento e quatnidade de produtos vendidos)
+
+import pandas as pd ,numpy e openpyxl
+
+tabela = pd.read_excel(r"Exportar\Vendas - Dez.xlsx")
+display(tabela)
+
+faturamento = tabela["Valor Final"].sum()
+quantidade = tabela["Quantidade"].sum()
+
+# Passo 5 - Enviar em email para a diretoria com os indicadores
+pyautogui.hotkey("ctrl", "t")
+pyperclip.copy("https://mail.google.com/mail/u/0/#inbox") 
+pyautogui.hotkey("ctrl", "v")
+pyautogui.press("enter")
+time.sleep(5)
+pyautogui.click (x=43, y=253)
+time.sleep(3)
+pyautogui.write("gabrielbessi4@gmail.com")
+pyautogui.press("tab")
+pyautogui.press("tab")
+pyperclip.copy("Relatório de Vendas")
+pyautogui.hotkey("ctrl", "v")
+pyautogui.press("tab")
+texto = f"""
+Prezados, bom dia
+O faturamento de ontem foi de: R$ {faturamento:,.2f}
+A quantidade de produtos foi de : {quantidade:,.2f}
+Abs
+Biel
+"""
+pyperclip.copy(texto)
+pyautogui.hotkey("ctrl", "v")
+pyautogui.hotkey("ctrl", "enter")
